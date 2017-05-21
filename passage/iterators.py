@@ -1,10 +1,10 @@
 import numpy as np
 
-from utils import shuffle, iter_data
-from theano_utils import floatX, intX
+from .utils import shuffle, iter_data
+from .theano_utils import floatX, intX
 
 def padded(seqs):
-    lens = map(len, seqs)
+    lens = list(map(len, seqs))
     max_len = max(lens)
     seqs_padded = []
     for seq, seq_len in zip(seqs, lens):
@@ -34,7 +34,7 @@ class Linear(object):
 
         for xmb in iter_data(X, size=self.size):
             xmb = self.x_dtype(xmb)
-            shape = range(len(xmb.shape))
+            shape = list(range(len(xmb.shape)))
             shape[0] = 1
             shape[1] = 0
             shape = tuple(shape)
@@ -48,7 +48,7 @@ class Linear(object):
 
         for xmb, ymb in iter_data(X, Y, size=self.size):
             xmb = self.x_dtype(xmb)
-            shape = range(len(xmb.shape))
+            shape = list(range(len(xmb.shape)))
             shape[0] = 1
             shape[1] = 0
             shape = tuple(shape)

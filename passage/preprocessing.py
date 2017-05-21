@@ -10,11 +10,11 @@ from collections import Counter
 punctuation = set(string.punctuation)
 punctuation.add('\n')
 punctuation.add('\t')
-punctuation.add(u'’')
-punctuation.add(u'‘')
-punctuation.add(u'“')
-punctuation.add(u'”')
-punctuation.add(u'´')
+punctuation.add('’')
+punctuation.add('‘')
+punctuation.add('“')
+punctuation.add('”')
+punctuation.add('´')
 punctuation.add('')
 
 def one_hot(X, n=None, negative_class=0.):
@@ -61,14 +61,14 @@ def token_encoder(texts, max_features=9997, min_df=10):
                 df[token] += 1
             else:
                 df[token] = 1
-    k, v = df.keys(), np.asarray(df.values())
+    k, v = list(df.keys()), np.asarray(list(df.values()))
     valid = v >= min_df
     k = lbf(k, valid)
     v = v[valid]
     sort_mask = np.argsort(v)[::-1]
     k = list_index(k, sort_mask)[:max_features]
     v = v[sort_mask][:max_features]
-    xtoi = dict(zip(k, range(3, len(k)+3)))
+    xtoi = dict(list(zip(k, list(range(3, len(k)+3)))))
     return xtoi
 
 def standardize_targets(Y, cost):
@@ -121,7 +121,7 @@ class Tokenizer(object):
         self.encoder['PAD'] = 0
         self.encoder['END'] = 1
         self.encoder['UNK'] = 2
-        self.decoder = dict(zip(self.encoder.values(), self.encoder.keys()))
+        self.decoder = dict(list(zip(list(self.encoder.values()), list(self.encoder.keys()))))
         self.n_features = len(self.encoder)
         return self
 

@@ -18,7 +18,7 @@ def load_gender_data(ntrain=10000, ntest=10000):
 
 def load_mnist(data_dir=None):
     if data_dir is None:
-        import urllib
+        import urllib.request, urllib.parse, urllib.error
         import gzip
         url = 'http://yann.lecun.com/exdb/mnist/'
         fnames = [
@@ -29,8 +29,8 @@ def load_mnist(data_dir=None):
         ]
         for fname in fnames:
             if not os.path.isfile(fname):
-                print 'data_dir not given and file not local - downloading mnist file:', fname
-                urllib.urlretrieve(url+fname, fname)
+                print('data_dir not given and file not local - downloading mnist file:', fname)
+                urllib.request.urlretrieve(url+fname, fname)
         data_dir = ''
     fd = gzip.open(os.path.join(data_dir,'train-images-idx3-ubyte.gz'))
     loaded = np.fromstring(fd.read(), dtype=np.uint8)

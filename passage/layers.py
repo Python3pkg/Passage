@@ -4,9 +4,9 @@ from theano.tensor.extra_ops import repeat
 from theano.sandbox.rng_mrg import MRG_RandomStreams as RandomStreams
 from copy import deepcopy
 
-from theano_utils import shared0s, floatX
-import activations
-import inits
+from .theano_utils import shared0s, floatX
+from . import activations
+from . import inits
 
 import numpy as np
 

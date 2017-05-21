@@ -4,11 +4,11 @@ import theano.tensor as T
 import numpy as np
 from time import time
 
-import costs
-import updates
-import iterators 
-from utils import case_insensitive_import, save
-from preprocessing import LenFilter, standardize_targets
+from . import costs
+from . import updates
+from . import iterators 
+from .utils import case_insensitive_import, save
+from .preprocessing import LenFilter, standardize_targets
 
 def flatten(l):
     return [item for sublist in l for item in sublist]
@@ -20,17 +20,17 @@ class RNN(object):
         del self.settings['self']
         self.layers = layers
 
-        if isinstance(cost, basestring):
+        if isinstance(cost, str):
             self.cost = case_insensitive_import(costs, cost)
         else:
             self.cost = cost
 
-        if isinstance(updater, basestring):
+        if isinstance(updater, str):
             self.updater = case_insensitive_import(updates, updater)()
         else:
             self.updater = updater
 
-        if isinstance(iterator, basestring):
+        if isinstance(iterator, str):
             self.iterator = case_insensitive_import(iterators, iterator)()
         else:
             self.iterator = iterator
@@ -96,7 +96,7 @@ class RNN(object):
                 sys.stdout.flush()
                 sys.stdout.write("\n")
             elif self.verbose == 1:
-                print status
+                print(status)
             if path and e % snapshot_freq == 0:
                 save(self, "{0}.{1}".format(path, e))
         return costs
